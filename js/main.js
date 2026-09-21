@@ -143,8 +143,7 @@ dateForm.addEventListener("submit", event => {
 
     if (selectedDate === APP_CONFIG.relationshipDate) {
         showLoginMessage(
-            "Sabía que la recordarías ❤️",
-            "success"
+            
         );
 
         loginScreen.classList.add("exit");
