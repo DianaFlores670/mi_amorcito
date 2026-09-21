@@ -186,8 +186,7 @@ dateForm.addEventListener("submit", event => {
 
     if (!selectedDate) {
         showLoginMessage(
-            "Primero tienes que escribir nuestra fecha 🐾",
-            "error"
+            
         );
         dateInput.focus();
         return;
@@ -198,8 +197,7 @@ dateForm.addEventListener("submit", event => {
 
     if (!formattedDate) {
         showLoginMessage(
-            "Escribe la fecha completa: dd/mm/aaaa 🐾",
-            "error"
+            
         );
 
         shakeLogin();
@@ -227,8 +225,7 @@ dateForm.addEventListener("submit", event => {
 
     } else {
         showLoginMessage(
-            "Mmm... esa no es nuestra fecha 😿 Inténtalo otra vez.",
-            "error"
+            
         );
 
         shakeLogin();
