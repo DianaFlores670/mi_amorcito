@@ -736,6 +736,12 @@ function createPhrases() {
     phraseLayer.innerHTML = "";
     state.phrases = [];
 
+    const total =
+        Math.max(
+            APP_CONFIG.phrases.length,
+            1
+        );
+
     APP_CONFIG.phrases.forEach(
         (text, index) => {
             const element =
@@ -744,28 +750,48 @@ function createPhrases() {
             element.className = "phrase";
             element.textContent = text;
 
+            // Las frases nacen ocultas.
+            // Así no aparecen amontonadas arriba antes de calcular
+            // su posición real dentro de la galaxia.
+            element.style.opacity = "0";
+            element.style.visibility = "hidden";
+
             phraseLayer.appendChild(element);
 
+            // Reparto uniforme alrededor de toda la galaxia.
             const angle =
                 (
                     index /
-                    APP_CONFIG.phrases.length
+                    total
                 ) *
                 Math.PI *
-                2;
+                2
+                +
+                (Math.random() - 0.5) * 0.35;
+
+            // Reparto vertical uniforme para evitar que todas
+            // terminen concentradas en la parte superior.
+            const normalizedY =
+                total === 1
+                    ? 0
+                    : (
+                        index /
+                        (total - 1)
+                    ) - 0.5;
 
             state.phrases.push({
                 element,
 
-                angle:
-                    angle +
-                    Math.random(),
+                angle,
 
                 radius:
-                    15 + Math.random() * 38,
+                    18 +
+                    (index % 4) * 8 +
+                    Math.random() * 5,
 
                 y:
-                    (Math.random() - 0.5) * 34,
+                    normalizedY * 28 +
+                    (Math.random() - 0.5) * 3,
 
                 offset:
                     Math.random() *
@@ -1192,7 +1218,13 @@ function createGlowTexture() {
 // ACTUALIZAR FRASES
 // ============================================================
 
-function updatePhrases(time) {
+function updatePhrases(
+    time,
+    revealProgress = 1
+) {
+    const reveal =
+        clamp01(revealProgress);
+
     state.phrases.forEach(
         phrase => {
             const angle =
@@ -1213,6 +1245,16 @@ function updatePhrases(time) {
 
                     Math.sin(angle) *
                     phrase.radius
+                );
+
+            // Comprobamos que la frase esté realmente delante
+            // de la cámara. Esto evita posiciones extrañas o
+            // agrupadas cuando la frase está detrás de la vista.
+            const cameraPosition =
+                worldPosition
+                .clone()
+                .applyMatrix4(
+                    camera.matrixWorldInverse
                 );
 
             const projected =
@@ -1236,13 +1278,20 @@ function updatePhrases(time) {
                 ) *
                 window.innerHeight;
 
+            const marginX =
+                isMobile ? 80 : 180;
+
+            const marginY =
+                isMobile ? 55 : 80;
+
             const visible =
+                cameraPosition.z < -0.1 &&
                 projected.z > -1 &&
                 projected.z < 1 &&
-                x > -180 &&
-                x < window.innerWidth + 180 &&
-                y > -80 &&
-                y < window.innerHeight + 80;
+                x > -marginX &&
+                x < window.innerWidth + marginX &&
+                y > -marginY &&
+                y < window.innerHeight + marginY;
 
             phrase.element.style.left =
                 `${x}px`;
@@ -1250,10 +1299,18 @@ function updatePhrases(time) {
             phrase.element.style.top =
                 `${y}px`;
 
-            phrase.element.style.opacity =
+            const opacity =
                 visible
-                    ? 0.9
+                    ? 0.9 * reveal
                     : 0;
+
+            phrase.element.style.opacity =
+                opacity;
+
+            phrase.element.style.visibility =
+                opacity > 0.02
+                    ? "visible"
+                    : "hidden";
         }
     );
 }
@@ -1712,7 +1769,33 @@ function animate() {
 
 
     // --------------------------------------------------------
-    // FRASES Y ENCABEZADO
+    // FRASES
+    // --------------------------------------------------------
+    // Calculamos sus posiciones desde el primer fotograma para
+    // que nunca aparezcan amontonadas arriba.
+    //
+    // Empiezan a hacerse visibles DURANTE la explosión, no después.
+    const phraseExplosionStart =
+        INTRO.heartBuild +
+        INTRO.heartPause;
+
+    const phraseReveal =
+        clamp01(
+            (
+                introTime -
+                phraseExplosionStart
+            ) /
+            INTRO.explosion
+        );
+
+    updatePhrases(
+        time,
+        phraseReveal
+    );
+
+
+    // --------------------------------------------------------
+    // ENCABEZADO
     // --------------------------------------------------------
     const revealStart =
         INTRO.heartBuild +
@@ -1723,8 +1806,6 @@ function animate() {
         introTime >
         revealStart
     ) {
-        updatePhrases(time);
-
         const header =
             document.querySelector(
                 ".galaxy-header"
