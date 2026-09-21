@@ -22,16 +22,17 @@ const INTRO = {
 // RESPONSIVE
 // ------------------------------------------------------------
 const isMobile = window.matchMedia("(max-width: 700px)").matches;
+// La experiencia 3D usa ahora los mismos valores en PC y celular.
 
 const PARTICLE_COUNT = {
-    heart: isMobile ? 7500 : APP_CONFIG.heartParticles,
-    paws: isMobile ? 750 : APP_CONFIG.pawParticles,
-    cats: isMobile ? 450 : APP_CONFIG.catParticles,
-    stars: isMobile ? 2800 : APP_CONFIG.stars
+    heart: APP_CONFIG.heartParticles,
+    paws: APP_CONFIG.pawParticles,
+    cats: APP_CONFIG.catParticles,
+    stars: APP_CONFIG.stars
 };
 
 function getCameraDistance() {
-    return isMobile ? 58 : APP_CONFIG.camera.startZ;
+    return APP_CONFIG.camera.startZ;
 }
 
 
@@ -43,44 +44,48 @@ const galaxyScreen = document.getElementById("galaxy-screen");
 
 const dateForm = document.getElementById("date-form");
 const dateInput = document.getElementById("relationship-date");
-const loginMessage = document.getElementById("login-message");
+dateInput.addEventListener(
+    "input",
+    () => {
 
-// Convierte el campo de fecha en un input de texto.
-// Así se ve el cursor parpadeante y en celular aparece teclado numérico.
-if (dateInput) {
-    dateInput.type = "text";
-    dateInput.inputMode = "numeric";
-    dateInput.maxLength = 10;
-    dateInput.placeholder = "dd/mm/aaaa";
-    dateInput.autocomplete = "off";
-
-    // Formato automático: dd/mm/aaaa
-    dateInput.addEventListener("input", () => {
-        const digits =
+        let value =
             dateInput.value
             .replace(/\D/g, "")
             .slice(0, 8);
 
-        let formatted = digits;
 
-        if (digits.length > 4) {
-            formatted =
-                digits.slice(0, 2) +
-                "/" +
-                digits.slice(2, 4) +
-                "/" +
-                digits.slice(4);
+        if (value.length >= 5) {
+
+            value =
+                value.slice(0, 2)
+                +
+                "/"
+                +
+                value.slice(2, 4)
+                +
+                "/"
+                +
+                value.slice(4);
+
         }
-        else if (digits.length > 2) {
-            formatted =
-                digits.slice(0, 2) +
-                "/" +
-                digits.slice(2);
+        else if (value.length >= 3) {
+
+            value =
+                value.slice(0, 2)
+                +
+                "/"
+                +
+                value.slice(2);
+
         }
 
-        dateInput.value = formatted;
-    });
-}
+
+        dateInput.value =
+            value;
+
+    }
+);
+const loginMessage = document.getElementById("login-message");
 
 const viewer = document.getElementById("viewer");
 const phraseLayer = document.getElementById("phrase-layer");
@@ -123,91 +128,23 @@ const state = {
 // LOGIN
 // ============================================================
 
-// Convierte dd/mm/aaaa a aaaa-mm-dd para compararlo con config.js.
-// También valida que la fecha realmente exista.
-function convertDateToISO(dateText) {
-    const parts = dateText.split("/");
-
-    if (parts.length !== 3) {
-        return "";
-    }
-
-    const [day, month, year] = parts;
-
-    if (
-        day.length !== 2 ||
-        month.length !== 2 ||
-        year.length !== 4
-    ) {
-        return "";
-    }
-
-    const dayNumber = Number(day);
-    const monthNumber = Number(month);
-    const yearNumber = Number(year);
-
-    if (
-        !Number.isInteger(dayNumber) ||
-        !Number.isInteger(monthNumber) ||
-        !Number.isInteger(yearNumber) ||
-        dayNumber < 1 ||
-        dayNumber > 31 ||
-        monthNumber < 1 ||
-        monthNumber > 12 ||
-        yearNumber < 1900
-    ) {
-        return "";
-    }
-
-    const testDate =
-        new Date(
-            yearNumber,
-            monthNumber - 1,
-            dayNumber
-        );
-
-    if (
-        testDate.getFullYear() !== yearNumber ||
-        testDate.getMonth() !== monthNumber - 1 ||
-        testDate.getDate() !== dayNumber
-    ) {
-        return "";
-    }
-
-    return `${year}-${month}-${day}`;
-}
-
-
 dateForm.addEventListener("submit", event => {
     event.preventDefault();
 
-    const selectedDate =
-        dateInput.value.trim();
+    const selectedDate = dateInput.value;
 
     if (!selectedDate) {
         showLoginMessage(
-            
+            "Primero tienes que elegir una fecha 🐾",
+            "error"
         );
-        dateInput.focus();
         return;
     }
 
-    const formattedDate =
-        convertDateToISO(selectedDate);
-
-    if (!formattedDate) {
+    if (selectedDate === APP_CONFIG.relationshipDate) {
         showLoginMessage(
-            
-        );
-
-        shakeLogin();
-        dateInput.focus();
-        return;
-    }
-
-    if (formattedDate === APP_CONFIG.relationshipDate) {
-        showLoginMessage(
-            
+            "Sabía que la recordarías ❤️",
+            "success"
         );
 
         loginScreen.classList.add("exit");
@@ -225,14 +162,11 @@ dateForm.addEventListener("submit", event => {
 
     } else {
         showLoginMessage(
-            
+            "Mmm... esa no es nuestra fecha 😿 Inténtalo otra vez.",
+            "error"
         );
 
         shakeLogin();
-
-        // Selecciona el contenido para que pueda volver a escribir fácilmente.
-        dateInput.focus();
-        dateInput.select();
     }
 });
 
@@ -272,7 +206,7 @@ function initGalaxy() {
     scene = new THREE.Scene();
 
     camera = new THREE.PerspectiveCamera(
-        isMobile ? 66 : 60,
+        60,
         window.innerWidth / window.innerHeight,
         0.1,
         1000
@@ -295,9 +229,7 @@ function initGalaxy() {
     );
 
     renderer.setPixelRatio(
-        isMobile
-            ? Math.min(window.devicePixelRatio, 1.5)
-            : Math.min(window.devicePixelRatio, 2)
+        Math.min(window.devicePixelRatio, 2)
     );
 
     viewer.appendChild(renderer.domElement);
@@ -322,9 +254,9 @@ function initGalaxy() {
     controls.enabled = false;
 
     // Sensibilidad diferente en celular
-    controls.rotateSpeed = isMobile ? 0.55 : 0.8;
-    controls.zoomSpeed = isMobile ? 0.7 : 1;
-    controls.panSpeed = isMobile ? 0.6 : 1;
+    controls.rotateSpeed = 0.8;
+    controls.zoomSpeed = 1;
+    controls.panSpeed = 1;
 
     controls.minDistance = APP_CONFIG.camera.minDistance;
     controls.maxDistance = APP_CONFIG.camera.maxDistance;
@@ -438,7 +370,7 @@ function createHeart() {
 
     const material =
         new THREE.PointsMaterial({
-            size: isMobile ? 0.16 : 0.20,
+            size: 0.20,
             color: 0xff4d94,
             map: texture,
             transparent: true,
@@ -468,7 +400,7 @@ function createHeart() {
 // ============================================================
 
 function createExplosion() {
-    const count = isMobile ? 900 : 1600;
+    const count = 1600;
 
     const positions = [];
     const directions = [];
@@ -507,7 +439,7 @@ function createExplosion() {
 
     const material =
         new THREE.PointsMaterial({
-            size: isMobile ? 0.20 : 0.25,
+            size: 0.25,
             map: createGlowTexture(),
             color: 0xff77ad,
             transparent: true,
@@ -564,7 +496,7 @@ function createPaws() {
 
     const material =
         new THREE.PointsMaterial({
-            size: isMobile ? 0.65 : 0.8,
+            size: 0.8,
             map: createPawTexture(),
             color: 0xffffff,
             transparent: true,
@@ -624,7 +556,7 @@ function createCats() {
 
     const material =
         new THREE.PointsMaterial({
-            size: isMobile ? 0.82 : 1.05,
+            size: 1.05,
             map: createCatTexture(),
             color: 0xffffff,
             transparent: true,
@@ -679,8 +611,7 @@ function createCloudPositions(
             Math.sin(angle) *
             radius;
 
-        const verticalSpread =
-            isMobile ? 20 : 26;
+        const verticalSpread = 26;
 
         const y =
             (Math.random() - 0.5) *
@@ -756,7 +687,7 @@ function createStars() {
 
     const material =
         new THREE.PointsMaterial({
-            size: isMobile ? 0.11 : 0.14,
+            size: 0.14,
             map: createGlowTexture(),
             color: 0xffffff,
             transparent: true,
@@ -815,13 +746,10 @@ function createPhrases() {
                     Math.random(),
 
                 radius:
-                    isMobile
-                        ? 14 + Math.random() * 30
-                        : 15 + Math.random() * 38,
+                    15 + Math.random() * 38,
 
                 y:
-                    (Math.random() - 0.5) *
-                    (isMobile ? 22 : 34),
+                    (Math.random() - 0.5) * 34,
 
                 offset:
                     Math.random() *
@@ -879,13 +807,10 @@ function createPhotos() {
 
                     // Distancia final de las fotos
                     const radius =
-                        isMobile
-                            ? 13 + Math.random() * 28
-                            : 15 + Math.random() * 35;
+                        15 + Math.random() * 35;
 
                     const finalY =
-                        (Math.random() - 0.5) *
-                        (isMobile ? 20 : 28);
+                        (Math.random() - 0.5) * 28;
 
                     // Mantiene la proporción real de la imagen
                     const imageRatio =
@@ -895,10 +820,7 @@ function createPhotos() {
                     // TAMAÑO FINAL DE LAS FOTOS
                     // Cambia estos valores si luego quieres hacerlas
                     // todavía más pequeñas o más grandes.
-                    const finalHeight =
-                        isMobile
-                            ? 1.7
-                            : 2.8;
+                    const finalHeight = 2.8;
 
                     const finalWidth =
                         finalHeight *
@@ -1447,8 +1369,7 @@ function animateExplosion(progress) {
         .directions;
 
     const distance =
-        easeOutCubic(progress) *
-        (isMobile ? 40 : 55);
+        easeOutCubic(progress) * 55;
 
     for (
         let i = 0;
@@ -1833,8 +1754,6 @@ function resize() {
     );
 
     renderer.setPixelRatio(
-        isMobile
-            ? Math.min(window.devicePixelRatio, 1.5)
-            : Math.min(window.devicePixelRatio, 2)
+        Math.min(window.devicePixelRatio, 2)
     );
 }

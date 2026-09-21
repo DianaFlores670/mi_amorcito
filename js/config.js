@@ -16,7 +16,7 @@ window.APP_CONFIG = {
         sería 14 de febrero de 2025.
     */
 
-    relationshipDate: "2026-09-05",
+    relationshipDate: "05/09/2026",
 
 
     // ======================================
