@@ -135,8 +135,7 @@ dateForm.addEventListener("submit", event => {
 
     if (!selectedDate) {
         showLoginMessage(
-            "Primero tienes que elegir una fecha 🐾",
-            "error"
+            
         );
         return;
     }
@@ -161,8 +160,7 @@ dateForm.addEventListener("submit", event => {
 
     } else {
         showLoginMessage(
-            "Mmm... esa no es nuestra fecha 😿 Inténtalo otra vez.",
-            "error"
+            
         );
 
         shakeLogin();
