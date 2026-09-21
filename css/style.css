@@ -1,0 +1,1185 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    font-family:
+    "Montserrat",
+    Arial,
+    sans-serif;
+
+    background: #020103;
+    color: white;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+.login-screen {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255, 70, 140, 0.20),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255, 120, 180, 0.12),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 80% 75%,
+            rgba(255, 50, 120, 0.12),
+            transparent 25%
+        ),
+        #030104;
+
+    z-index: 100;
+}
+
+.login-screen.exit {
+    animation: loginExit 0.8s ease forwards;
+}
+
+@keyframes loginExit {
+
+    to {
+        opacity: 0;
+        transform: scale(1.08);
+        filter: blur(12px);
+    }
+
+}
+
+
+.login-card {
+
+    position: relative;
+
+    width: min(430px, 100%);
+
+    padding: 38px 32px;
+
+    border-radius: 28px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.10),
+            rgba(255,255,255,0.035)
+        );
+
+    border:
+        1px solid rgba(255,255,255,0.14);
+
+    backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,0.45),
+        0 0 60px rgba(255,50,130,0.10);
+}
+
+.login-icon {
+    font-size: 46px;
+
+    margin-bottom: 12px;
+
+    filter:
+        drop-shadow(
+            0 0 15px rgba(255,100,170,0.8)
+        );
+}
+
+.login-small {
+
+    color: #ffafd0;
+
+    font-size: 0.92rem;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 8px;
+}
+
+.login-card h1 {
+
+    font-family:
+        "Great Vibes",
+        cursive;
+
+    font-weight:
+        400;
+
+    font-size:
+        clamp(
+            3rem,
+            10vw,
+            5rem
+        );
+
+    margin-bottom:
+        16px;
+
+    color:
+        #fff4fa;
+
+    -webkit-text-stroke:
+
+        0.5px
+
+        rgba(
+            255,
+            120,
+            180,
+            0.8
+        );
+
+
+    text-shadow:
+
+        0 0 3px #ffffff,
+
+        0 0 8px #ff9cc5,
+
+        0 0 18px
+        rgba(
+            255,
+            70,
+            145,
+            0.8
+        ),
+
+        0 0 35px
+        rgba(
+            255,
+            50,
+            130,
+            0.4
+        );
+
+}
+
+.login-card h1 span {
+    color: #ff4d94;
+}
+
+.login-description {
+
+    color:
+        rgba(255,255,255,0.75);
+
+    line-height: 1.6;
+
+    margin-bottom: 26px;
+}
+
+#date-form label {
+
+    display: block;
+
+    color: #ffd5e6;
+
+    margin-bottom: 10px;
+
+    font-size: 0.93rem;
+}
+
+#relationship-date {
+    width: 100%;
+
+    padding: 15px 16px;
+
+    border-radius: 14px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.15);
+
+    background:
+        rgba(255, 255, 255, 0.07);
+
+    color: #ffd5e6;
+
+    outline: none;
+
+    font-size: 18px;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    text-align: center;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 14px;
+
+    caret-color: #ff6fa8;
+
+    cursor: text;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+
+#relationship-date::placeholder {
+    color:
+        rgba(255, 210, 228, 0.45);
+
+    letter-spacing: 2px;
+}
+
+
+#relationship-date:focus {
+    border-color: #ff78ad;
+
+    background:
+        rgba(255, 120, 173, 0.08);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255, 120, 173, 0.13);
+}
+#relationship-date:focus {
+    border-color: #ff78ad;
+
+    background: rgba(255, 120, 173, 0.08);
+
+    box-shadow:
+        0 0 0 3px rgba(255, 120, 173, 0.15);
+}
+
+#date-form button {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    color: white;
+
+    font-weight: 700;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff397f,
+            #ff76b0
+        );
+
+    box-shadow:
+        0 12px 30px
+        rgba(255,50,120,0.24);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#date-form button:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 16px 35px
+        rgba(255,50,120,0.32);
+}
+
+.login-message {
+
+    min-height: 24px;
+
+    margin-top: 15px;
+
+    font-size: 0.9rem;
+}
+
+.login-message.error {
+    color: #ff91b9;
+}
+
+.login-message.success {
+    color: #ffc4da;
+}
+
+.little-paws {
+
+    margin-top: 20px;
+
+    opacity: 0.45;
+
+    letter-spacing: 3px;
+}
+
+
+/* PARTÍCULAS DEL LOGIN */
+
+.login-background {
+
+    position: absolute;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+}
+
+.login-background span {
+
+    position: absolute;
+
+    opacity: 0.18;
+
+    animation:
+        loginFloat 8s ease-in-out
+        infinite;
+}
+
+.login-background span:nth-child(1) {
+    left: 10%;
+    top: 15%;
+    font-size: 35px;
+}
+
+.login-background span:nth-child(2) {
+    left: 30%;
+    top: 8%;
+    font-size: 20px;
+    animation-delay: 1s;
+}
+
+.login-background span:nth-child(3) {
+    right: 12%;
+    top: 20%;
+    font-size: 40px;
+    animation-delay: 2s;
+}
+
+.login-background span:nth-child(4) {
+    left: 15%;
+    bottom: 12%;
+    font-size: 28px;
+    animation-delay: 3s;
+}
+
+.login-background span:nth-child(5) {
+    right: 20%;
+    bottom: 14%;
+    font-size: 36px;
+    animation-delay: 1.5s;
+}
+
+.login-background span:nth-child(6) {
+    right: 35%;
+    bottom: 5%;
+    font-size: 18px;
+}
+
+.login-background span:nth-child(7) {
+    left: 5%;
+    top: 55%;
+    font-size: 30px;
+}
+
+@keyframes loginFloat {
+
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            rotate(-5deg);
+    }
+
+    50% {
+        transform:
+            translateY(-18px)
+            rotate(8deg);
+    }
+
+}
+
+
+/* =========================================
+   GALAXIA
+========================================= */
+
+.galaxy-screen {
+
+    position: fixed;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #19000e 0%,
+            #080005 45%,
+            #010102 100%
+        );
+}
+
+#viewer {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+}
+
+#viewer canvas {
+
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+}
+
+.space-glow {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255,50,130,0.08),
+            transparent 30%
+        );
+}
+
+
+/* TITULO */
+
+.galaxy-header {
+    position: absolute;
+
+    top: 18px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: min(
+        750px,
+        calc(100% - 40px)
+    );
+
+    text-align: center;
+
+    pointer-events: none;
+
+    z-index: 5;
+
+    opacity: 0;
+
+    transition:
+        opacity 1.5s ease,
+        transform 1.5s ease;
+}
+
+.galaxy-header.visible {
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+.galaxy-header.visible {
+
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+
+}
+.galaxy-header h1 {
+
+    font-family:
+        "Great Vibes",
+        cursive;
+
+    font-size:
+        clamp(
+            2.4rem,
+            4.5vw,
+            4.2rem
+        );
+
+    font-weight: 400;
+
+    line-height: 1;
+
+    margin: 0;
+
+    color: #fff1f7;
+
+    text-shadow:
+        0 0 4px rgba(255, 90, 150, 0.45),
+        0 0 10px rgba(255, 70, 140, 0.25);
+}
+
+.galaxy-header p {
+
+    margin-top: 2px;
+
+    font-family:
+        "Great Vibes",
+        cursive;
+
+    font-size:
+        clamp(
+            1.8rem,
+            3.2vw,
+            3rem
+        );
+
+    line-height: 1;
+
+    color: #ffe6f0;
+
+    text-shadow:
+        0 0 4px rgba(255, 90, 150, 0.35);
+}
+
+
+/* FRASES */
+
+#phrase-layer {
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 4;
+}
+
+.phrase {
+
+    position: absolute;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    white-space: nowrap;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(
+            12px,
+            1vw,
+            17px
+        );
+
+    font-weight: 600;
+
+    font-style: italic;
+
+    letter-spacing: 0.5px;
+
+    color: #ff8fbd;
+
+    /* sombra ligera solo para mejorar lectura */
+    text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.85);
+
+    background: transparent;
+
+    border: none;
+
+    box-shadow: none;
+
+    padding: 0;
+
+    border-radius: 0;
+
+    backdrop-filter: none;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease;
+
+    pointer-events: none;
+}
+
+@keyframes phraseGlow {
+
+    0%,
+    100% {
+
+        text-shadow:
+
+            0 0 2px #ffffff,
+
+            0 0 5px #ffb0d0,
+
+            0 0 10px
+            rgba(
+                255,
+                77,
+                148,
+                0.75
+            ),
+
+            0 0 18px
+            rgba(
+                255,
+                50,
+                130,
+                0.35
+            );
+
+
+        box-shadow:
+
+            0 0 5px
+            rgba(
+                255,
+                100,
+                160,
+                0.15
+            ),
+
+            0 0 12px
+            rgba(
+                255,
+                60,
+                140,
+                0.08
+            );
+
+    }
+
+
+    50% {
+
+        text-shadow:
+
+            0 0 3px #ffffff,
+
+            0 0 8px #ffc0da,
+
+            0 0 16px
+            rgba(
+                255,
+                77,
+                148,
+                1
+            ),
+
+            0 0 30px
+            rgba(
+                255,
+                50,
+                130,
+                0.65
+            );
+
+
+        box-shadow:
+
+            0 0 8px
+            rgba(
+                255,
+                120,
+                175,
+                0.32
+            ),
+
+            0 0 20px
+            rgba(
+                255,
+                50,
+                140,
+                0.18
+            );
+
+    }
+
+}
+/* CONTROLES */
+
+.instructions {
+
+    position: absolute;
+
+    left: 20px;
+
+    bottom: 18px;
+
+    z-index: 6;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 12px 15px;
+
+    border-radius: 14px;
+
+    background:
+        rgba(10,5,12,0.55);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.10);
+
+    backdrop-filter:
+        blur(10px);
+
+    font-size: 12px;
+
+    color:
+        rgba(255,255,255,0.75);
+}
+
+.center-button {
+
+    position: absolute;
+
+    right: 20px;
+
+    bottom: 18px;
+
+    z-index: 7;
+
+    padding: 11px 17px;
+
+    border: 1px solid
+        rgba(255,255,255,0.12);
+
+    border-radius: 999px;
+
+    color: white;
+
+    background:
+        rgba(255,70,140,0.18);
+
+    backdrop-filter:
+        blur(10px);
+
+    cursor: pointer;
+}
+
+
+/* =========================================
+   MODAL FOTO
+========================================= */
+
+.photo-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 200;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 25px;
+
+    background:
+        rgba(0,0,0,0.80);
+
+    backdrop-filter:
+        blur(10px);
+}
+
+.photo-modal-content {
+
+    position: relative;
+
+    max-width: 680px;
+
+    max-height: 90%;
+
+    text-align: center;
+}
+
+.photo-modal img {
+
+    max-width: 100%;
+
+    max-height: 72vh;
+
+    object-fit: contain;
+
+    border-radius: 18px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.15);
+
+    box-shadow:
+        0 20px 70px
+        rgba(0,0,0,0.7);
+}
+
+.photo-modal p {
+
+    margin-top: 16px;
+
+    color: #ffd0e2;
+
+    font-size: 1.05rem;
+}
+
+.close-photo {
+
+    position: absolute;
+
+    right: -12px;
+
+    top: -12px;
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 50%;
+
+    border: none;
+
+    background: #ff4d94;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 25px;
+
+    z-index: 2;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .login-card {
+        padding:
+            30px 22px;
+    }
+
+    .galaxy-header {
+        top: 18px;
+    }
+
+    .instructions {
+        display: none;
+    }
+
+    .center-button {
+
+        right: 50%;
+
+        transform:
+            translateX(50%);
+
+        bottom: 15px;
+
+        font-size: 12px;
+    }
+
+}
+
+/* =========================================
+   VERSION CELULAR
+========================================= */
+
+@media (max-width: 700px) {
+
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+
+    /* ==============================
+       LOGIN
+    ============================== */
+
+    .login-screen {
+        padding: 16px;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 370px;
+
+        padding:
+            28px
+            20px;
+
+        border-radius: 22px;
+    }
+
+    .login-icon {
+        font-size: 38px;
+        margin-bottom: 5px;
+    }
+
+    .login-small {
+        font-size: 11px;
+        letter-spacing: 1.2px;
+    }
+
+    .login-card h1 {
+        font-size: clamp(
+            2.8rem,
+            14vw,
+            4rem
+        );
+
+        line-height: 0.95;
+
+        margin-bottom: 14px;
+    }
+
+    .login-description {
+        font-size: 13px;
+        line-height: 1.45;
+
+        margin-bottom: 20px;
+    }
+
+    #date-form label {
+        font-size: 13px;
+    }
+
+    #relationship-date {
+        height: 50px;
+        font-size: 16px;
+    }
+
+    #date-form button {
+        min-height: 50px;
+        font-size: 14px;
+    }
+
+
+    /* ==============================
+       TITULO GALAXIA
+    ============================== */
+
+    .galaxy-header {
+
+        top: 12px;
+
+        width:
+            calc(
+                100% - 30px
+            );
+    }
+
+    .galaxy-header h1 {
+
+        font-size:
+            clamp(
+                2rem,
+                10vw,
+                3rem
+            );
+
+        line-height:
+            0.95;
+
+        letter-spacing:
+            0;
+
+    }
+
+    .galaxy-header p {
+
+        margin-top:
+            -2px;
+
+        font-size:
+            clamp(
+                1.35rem,
+                7vw,
+                2rem
+            );
+
+        line-height:
+            1;
+
+    }
+
+
+    /* ==============================
+       FRASES GALAXIA
+    ============================== */
+
+    .phrase {
+
+        font-size:
+            clamp(
+                10px,
+                3vw,
+                13px
+            );
+
+        line-height:
+            1.15;
+
+        white-space:
+            normal;
+
+        text-align:
+            center;
+
+        max-width:
+            140px;
+
+        text-shadow:
+            0 1px 2px
+            rgba(
+                0,
+                0,
+                0,
+                0.95
+            );
+
+    }
+
+
+    .phrase-important {
+
+        font-size:
+            clamp(
+                15px,
+                4vw,
+                19px
+            );
+
+        max-width:
+            155px;
+
+    }
+
+
+    /* ==============================
+       BOTON CENTRAR
+    ============================== */
+
+    .center-button {
+
+        right: auto;
+
+        left: 50%;
+
+        bottom: 14px;
+
+        transform:
+            translateX(-50%);
+
+        min-height:
+            44px;
+
+        padding:
+            9px
+            15px;
+
+        font-size:
+            11px;
+
+        white-space:
+            nowrap;
+
+    }
+
+
+    /* ocultamos explicación de mouse */
+
+    .instructions {
+        display: none;
+    }
+
+
+    /* ==============================
+       CANVAS
+    ============================== */
+
+    #viewer,
+    #viewer canvas {
+
+        width: 100% !important;
+
+        height: 100% !important;
+
+        touch-action:
+            none;
+
+    }
+
+}

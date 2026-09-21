@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+>
+
+    <title>Nuestra Galaxia ❤️🐾</title>
+
+    <link
+        rel="stylesheet"
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Montserrat:wght@300;400;500&display=swap"
+    rel="stylesheet"
+>
+
+<link
+    rel="stylesheet"
+    href="css/style.css"
+>
+        href="css/style.css"
+    >
+</head>
+
+<body>
+
+    <!-- ===================================== -->
+    <!-- PANTALLA DE ENTRADA -->
+    <!-- ===================================== -->
+
+    <section id="login-screen" class="login-screen">
+
+        <div class="login-background">
+
+        </div>
+
+        <div class="login-card">
+
+            
+
+            <p class="login-small">
+                
+            </p>
+
+            <h1>
+                Holi mi vida
+            </h1>
+
+            <p class="login-description">
+                Bueno...la verdad espero que te guste jsjs, quería darte algo con lo que yo sé hacer :3
+            </p>
+
+            <form id="date-form">
+
+                <label for="relationship-date">
+                    ¿Recuerdas el día que me dijiste que si?
+                </label>
+
+                <input
+    id="relationship-date"
+    type="text"
+    inputmode="numeric"
+    maxlength="10"
+    placeholder="dd/mm/aaaa"
+    autocomplete="off"
+    required
+>
+
+                <button type="submit">
+                    Dale click :D
+                </button>
+
+            </form>
+
+            <p
+                id="login-message"
+                class="login-message"
+                aria-live="polite"
+            ></p>
+
+            
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================== -->
+    <!-- GALAXIA -->
+    <!-- ===================================== -->
+
+    <main
+        id="galaxy-screen"
+        class="galaxy-screen hidden"
+    >
+
+        <div id="viewer"></div>
+
+        <div class="space-glow"></div>
+
+        <header class="galaxy-header">
+
+            <h1 id="galaxy-title">
+                Para ti ❤️
+            </h1>
+
+            <p id="galaxy-subtitle"></p>
+
+        </header>
+
+        <div id="phrase-layer"></div>
+
+        
+
+        
+
+        <!-- FOTO SELECCIONADA -->
+
+        <div
+            id="photo-modal"
+            class="photo-modal hidden"
+        >
+
+            <div class="photo-modal-content">
+
+                <button
+                    id="close-photo"
+                    class="close-photo"
+                    type="button"
+                >
+                    ×
+                </button>
+
+                <img
+                    id="selected-photo"
+                    src=""
+                    alt="Nuestro recuerdo"
+                >
+
+                <p id="selected-caption"></p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- THREE.JS -->
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+    </script>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js">
+    </script>
+
+    <script src="js/config.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>
