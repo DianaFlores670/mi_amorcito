@@ -205,7 +205,7 @@ function initGalaxy() {
     camera = new THREE.PerspectiveCamera(
         60,
         window.innerWidth / window.innerHeight,
-        0.1,
+        0.01,
         1000
     );
 
@@ -255,7 +255,13 @@ function initGalaxy() {
     controls.zoomSpeed = 1;
     controls.panSpeed = 1;
 
-    controls.minDistance = APP_CONFIG.camera.minDistance;
+    // Evita que al hacer mucho zoom la cámara atraviese el centro
+    // y termine dejando las partículas detrás de ella.
+    controls.minDistance = Math.max(
+        APP_CONFIG.camera.minDistance,
+        10
+    );
+
     controls.maxDistance = APP_CONFIG.camera.maxDistance;
 
     controls.target.set(0, 0, 0);
@@ -382,6 +388,11 @@ function createHeart() {
             material
         );
 
+    // Las posiciones cambian durante la animación.
+    // Evitamos que Three.js oculte todo el grupo por un cálculo
+    // de visibilidad basado en posiciones antiguas.
+    heartPoints.frustumCulled = false;
+
     heartPoints.userData.startPositions =
         startPositions;
 
@@ -451,6 +462,8 @@ function createExplosion() {
             material
         );
 
+    explosionPoints.frustumCulled = false;
+
     explosionPoints.userData.directions =
         directions;
 
@@ -507,6 +520,8 @@ function createPaws() {
             geometry,
             material
         );
+
+    paws.frustumCulled = false;
 
     paws.userData.startPositions =
         startPositions;
@@ -567,6 +582,8 @@ function createCats() {
             geometry,
             material
         );
+
+    cats.frustumCulled = false;
 
     cats.userData.startPositions =
         startPositions;
@@ -698,6 +715,8 @@ function createStars() {
             geometry,
             material
         );
+
+    stars.frustumCulled = false;
 
     stars.userData.startPositions =
         startPositions;
