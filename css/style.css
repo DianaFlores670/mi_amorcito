@@ -606,57 +606,33 @@ input {
 }
 
 .phrase {
-
     position: absolute;
 
-    transform:
-        translate(
-            -50%,
-            -50%
-        );
+    transform: translate(-50%, -50%);
 
     white-space: nowrap;
 
-    font-family:
-        "Cormorant Garamond",
-        serif;
+    width: max-content;
+    max-width: none;
 
-    font-size:
-        clamp(
-            12px,
-            1vw,
-            17px
-        );
+    text-align: center;
+
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 17px;
 
     font-weight: 600;
 
     font-style: italic;
 
-    letter-spacing: 0.5px;
-
     color: #ff8fbd;
 
-    /* sombra ligera solo para mejorar lectura */
-    text-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.85);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 
     background: transparent;
-
     border: none;
-
     box-shadow: none;
-
     padding: 0;
-
-    border-radius: 0;
-
-    backdrop-filter: none;
-
-    opacity: 0;
-
-    transition:
-        opacity 0.35s ease,
-        transform 0.35s ease;
 
     pointer-events: none;
 }
@@ -1081,35 +1057,15 @@ input {
     ============================== */
 
     .phrase {
+        font-size: 13px;
 
-        font-size:
-            clamp(
-                10px,
-                3vw,
-                13px
-            );
+        white-space: nowrap;
 
-        line-height:
-            1.15;
+        width: max-content;
 
-        white-space:
-            normal;
+        max-width: none;
 
-        text-align:
-            center;
-
-        max-width:
-            140px;
-
-        text-shadow:
-            0 1px 2px
-            rgba(
-                0,
-                0,
-                0,
-                0.95
-            );
-
+        text-align: center;
     }
 
 
